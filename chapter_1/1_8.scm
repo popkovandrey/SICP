@@ -6,25 +6,22 @@
     (/ (+ x y) 2))
 
 (define (improve guess x)
-    (average guess (/ x guess)))
+    (/ (+ (/ x guess guess) (* 2 guess)) 3))
 
 (define (square x) (* x x))
-
-(define (old-good-enough? guess x)
-    (< (abs (- (square guess) x)) 0.001))
 
 (define (good-enough? prev-guess guess)
     (printf "~a ~a ~a ~a\n" count (- prev-guess guess) guess prev-guess)
     (set! count (+ count 1))
-    (< (/ (abs (- guess prev-guess)) prev-guess) 0.0001))
+    (< (abs (/ (- guess prev-guess) prev-guess)) 0.0001))
 
-(define (sqrt-iter guess x)
+(define (cubrt-iter guess x)
     (if (good-enough? guess (improve guess x))
         (printf "sqrt(~a) = ~a" x guess)
-        (sqrt-iter (improve guess x) x)))
+        (cubrt-iter (improve guess x) x)))
 
-(define (sqrt x)
-    (sqrt-iter 1.0 x))
+(define (cubrt x)
+    (cubrt-iter 1.0 x))
 
-(sqrt 1e100)
+(cubrt -27)
 
